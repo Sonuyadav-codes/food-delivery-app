@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TastyByte</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <i class="fas fa-utensils"></i>
+                <span>TastyByte</span>
+            </div>
+
+            <div class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#menu">Menu</a>
+                <a href="#about">About</a>
+                <a href="#contact">Contact</a>
+            </div>
+
+            <div class="cart-icon" id="cartIcon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>Delicious Food Delivered To Your Door</h1>
+            <p>Order from the best restaurants in town and get it delivered in minutes. Fresh, hot, and ready when you are.</p>
+            <a href="#menu" class="btn">Order Now</a>
+        </div>
+    </section>
+
+    <!-- Categories & Food Items -->
+    <section class="categories" id="menu">
+        <h2 class="section-title">Our Menu</h2>
+
+        <div class="category-buttons">
+            <a href="?category=all" class="category-link">
+                <button class="category-btn {% if selected_category == 'all' or not selected_category %}active{% endif %}">
+                    All Items
+                </button>
+            </a>
+
+            <a href="?category=burgers" class="category-link">
+                <button class="category-btn {% if selected_category == 'burgers' %}active{% endif %}">
+                    Burgers
+                </button>
+            </a>
+
+            <a href="?category=pizza" class="category-link">
+                <button class="category-btn {% if selected_category == 'pizza' %}active{% endif %}">
+                    Pizza
+                </button>
+            </a>
+
+            <a href="?category=desserts" class="category-link">
+                <button class="category-btn {% if selected_category == 'desserts' %}active{% endif %}">
+                    Desserts
+                </button>
+            </a>
+
+            <a href="?category=drinks" class="category-link">
+                <button class="category-btn {% if selected_category == 'drinks' %}active{% endif %}">
+                    Drinks
+                </button>
+            </a>
+        </div>
+
+        <div class="food-grid">
+            {% for food in foods %}
+            <div class="food-card">
+                <img src="{{ food.image }}" alt="{{ food.name }}" class="food-img">
+                <div class="food-info">
+                    <h3 class="food-title">{{ food.name }}</h3>
+                    <p class="food-desc">{{ food.category|title }}</p>
+                    <div class="food-footer">
+                        <span class="food-price">₹{{ food.price }}</span>
+                        <button class="add-to-cart">
+                            <i class="fas fa-plus"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>No food items available.</p>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="cart-modal" id="cartModal">
+        <div class="cart-header">
+            <h3>Your Cart</h3>
+            <button class="close-cart" id="closeCart">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be added here dynamically -->
+        </div>
+
+        <div class="cart-total">
+            <div class="total-row">
+                <span>Subtotal:</span>
+                <span id="subtotal">₹0.00</span>
+            </div>
+            <div class="total-row">
+                <span>Delivery Fee:</span>
+                <span>₹40.00</span>
+            </div>
+            <div class="total-row total-price">
+                <span>Total:</span>
+                <span id="total">₹40.00</span>
+            </div>
+
+            <a href="{% url 'checkout' %}">
+                <button class="checkout-btn">Proceed to Checkout</button>
+            </a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>TastyByte</h3>
+                <p>Serving delicious meals since 2020. We're committed to bringing you the best dining experience with fresh ingredients and fast delivery.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-column">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#menu">Menu</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="#">FAQs</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <ul class="footer-links">
+                    <li><i class="fas fa-map-marker-alt"></i> 123 Food Street, Mumbai</li>
+                    <li><i class="fas fa-phone"></i> +91 98765 43210</li>
+                    <li><i class="fas fa-envelope"></i> info@tastybyte.com</li>
+                    <li><i class="fas fa-clock"></i> 10:00 AM - 11:00 PM</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="copyright">
+            <p>&copy; 2023 TastyByte. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
