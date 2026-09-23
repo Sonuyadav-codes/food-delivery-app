@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TastyByte</title>
 
-    <!-- <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"> --> -->
-    <img src="{{ food.image.url }}" alt="{{ food.name }}" class="food-img">
-    
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
     <!-- Header -->
@@ -82,7 +80,7 @@
         <div class="food-grid">
             {% for food in foods %}
             <div class="food-card">
-                <img src="{{ food.image }}" alt="{{ food.name }}" class="food-img">
+                <img src="{{ food.image.url }}" alt="{{ food.name }}" class="food-img">
                 <div class="food-info">
                     <h3 class="food-title">{{ food.name }}</h3>
                     <p class="food-desc">{{ food.category|title }}</p>
